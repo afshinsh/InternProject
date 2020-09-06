@@ -1,0 +1,39 @@
+﻿@page
+@model WebApplication4.Pages.ReportDetailsModel
+@{
+    Layout = "Table_Layout";
+}
+@using DNTPersianUtils.Core;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>جزییات گزارش</title>
+</head>
+
+<body>
+    <h1 style="margin-bottom:20px" align="middle">جزییات گزارش</h1>
+
+    <table id="t01">
+        <tr>
+            <th><label>نام کاربر</label></th>
+            <th><label>تیتر</label></th>
+            <th><label>تاریخ انتشار</label></th>
+            <th><label>محتوا</label></th>
+        </tr>
+        <tr>
+            <td>@Model.Username</td>
+            <td>@Model.Report.Title</td>
+            <td>@Model.Report.SubmitDate.ToPersianDateTextify()</td>
+            <td>@Model.Report.Content</td>
+        </tr>
+
+    </table>
+
+    <a style="margin-left:720px; margin-top:100px" asp-page-handler="Back" asp-route-UserID="@Model.UserID"
+       asp-route-pageCode="@Model.PageCode" class="button button3">بازگشت</a>
+
+</body>
+</html>

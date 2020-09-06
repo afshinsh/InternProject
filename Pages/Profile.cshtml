@@ -1,0 +1,83 @@
+﻿@page
+@model WebApplication4.Pages.ProfileModel
+@using DNTPersianUtils.Core; 
+
+
+@{ 
+    Layout = "Table_Layout";
+
+}
+<!DOCTYPE html>
+
+
+<html lang="fa">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>پروفایل</title>
+
+    <title>صفحه ی ثبت نام</title>
+</head>
+
+<body>
+    <h1 align="middle"> @Model.Account.UserName پروفایل </h1>
+
+    <table id="t01" style="direction:rtl; width:60%; margin-left:auto;
+            margin-right:auto; margin-top:20px">
+        <tr>
+            <th>
+                نام کاربری
+            </th>
+            <td>
+                <label> @Model.Account.UserName</label>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                ایمیل
+            </th>
+            <td>
+                <label> @Model.Account.Email</label>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                تاریخ تولد
+            </th>
+            <td>
+                <label> @Model.Account.BornDate.ToLongPersianDateString()</label>
+
+            </td>
+        </tr>
+
+    </table>
+
+ 
+
+
+    <form method="post" asp-page="Profile">
+        <div style="white-space:pre-line; margin-bottom:20px" >
+            <button asp-page-handler="Edit" style="" asp-route-id="@Model.Account.Id" class="button button1 horizontal-center">ویرایش اطلاعات</button>
+
+
+        </div>
+
+
+
+
+            @if (Model.Account.IsAdmin)
+            {
+                <a align="middle" asp-page="AdminHome" asp-page-handler="Back" asp-route-id="@Model.Account.Id"
+                   class="button button3 horizontal-center">بازگشت به خانه</a>
+            }
+            else
+            {
+                <a align="middle" asp-page="Home" asp-page-handler="Back" asp-route-id="@Model.Account.Id"
+                   class="button button3 horizontal-center">بازگشت به خانه</a>
+
+            }
+
+
+    </form>
+
+</body>
+</html>

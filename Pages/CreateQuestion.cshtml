@@ -1,0 +1,123 @@
+﻿@page
+@model WebApplication4.Pages.CreateQuestionModel
+@{
+    Layout = "Question_Layout";
+}
+
+<!DOCTYPE html>
+
+
+<html dir="rtl">
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>فرم ایجاد سوال</title>
+
+
+    <script type="text/javascript" src="~/JS/riazi-courses.js"></script>
+    <script type="text/javascript" src="~/JS/ensani-courses.js"></script>
+    <script type="text/javascript" src="~/JS/tajrobi-courses.js"></script>
+
+
+
+</head>
+
+
+
+<body>
+    <p id="demo"></p>
+
+    <h2 align="middle">فرم ایجاد سوال</h2>
+    <div class="container">
+        <form method="post" asp-page="CreateQuestion" 
+              asp-route-UserId="@Model.Question.OwnerId" enctype="multipart/form-data">
+            <div class="row">
+
+                <div class="col-75">
+                    <input type="text" asp-for="@Model.Question.Title" placeholder="عنوان" required>
+                </div>
+                <div class="col-25">
+                    <label>عنوان را وارد کنید</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-75">
+                    <select id="fields" asp-for="@Model.Question.Field">
+                        <option value="" disabled selected>-- انتخاب کنید --</option>
+                        <option value="ریاضی" onclick="return riaziClick()">ریاضی</option>
+                        <option value="تجربی" onclick="return tajrobiClick()">تجربی</option>
+                        <option value="انسانی" onclick="return ensaniClick()">انسانی</option>
+                    </select>
+                </div>
+
+                <div class="col-25">
+                    <label>رشته را وارد کنید</label>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-75">
+                    <select id="courses" asp-for="@Model.Question.Course">
+                        <option value="">-- انتخاب کنید -- </option>
+                    </select>
+                </div>
+
+                <div class="col-25">
+                    <label>مبحث را وارد کنید</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-75">
+                    <select asp-for="@Model.Question.Type">
+                        <option value="Question">سوال</option>
+                        <option value="comment">نقد یا نظر</option>
+                        <option value="Idea">ایده</option>
+                    </select>
+                </div>
+                <div class="col-25">
+                    <label>نوع آن را انتخاب کنید</label>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-75">
+                    <textarea asp-for="@Model.Question.Text" placeholder="متن سوال"
+                              style="height:200px" required></textarea>
+                </div>
+                <div class="col-25">
+                    <label>متن سوال را وارد کنید</label>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-75">
+                    <input type="file" asp-for="@Model.AttachFile" />
+                </div>
+                <div class="col-25">
+                    <label>فایل ضمیمه کنید</label>
+                </div>
+            </div>
+
+            <p dir="rtl" style="color:red;font-size:x-large">@Model.Message</p>
+            <div class="row">
+
+                <input type="submit" value="ثبت سوال">
+            </div>
+            <div class="row">
+
+                <a style="width: 20%;  background-color: red" asp-page="Home" asp-page-handler="Back"
+                   asp-route-id="@Model.Question.OwnerId">بازگشت</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

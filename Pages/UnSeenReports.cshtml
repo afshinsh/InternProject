@@ -1,0 +1,109 @@
+﻿@page
+@model WebApplication4.Pages.UnSeenReportsModel
+@using WebApplication4.Models
+@using DNTPersianUtils.Core;
+
+
+@{
+    Layout = "Table_Layout";
+}
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>گزارشات دیده نشده</title>
+
+</head>
+<body>
+    <form asp-page="UnSeenReports" asp-route-AdminId="@Model.AdminAccount.Id" method="post">
+        <h1 align="middle" style="color:darkblue">لیست گزارشات دیده نشده</h1>
+
+        @if (Model.UnSeenReports.Count != 0)
+        {
+            <table id="t01">
+                <tr>
+                    <th>
+                        <label>شماره</label>
+                    </th>
+
+                    <th>
+                        <label>نام کاربر</label>
+                    </th>
+
+                    <th>
+                        <label>تیتر</label>
+                    </th>
+
+
+                    <th>
+                        <label>تاریخ انتشار</label>
+                    </th>
+
+
+                    <th>
+                        <label>محتوا</label>
+                    </th>
+
+                    <th>
+                        <label>جزییات</label>
+                    </th>
+
+                </tr>
+
+                @for (int i = Model.UnSeenReports.Count - 1; i >= 0; i--)
+                {
+                    Report item = Model.UnSeenReports[i];
+
+
+
+                    <tr>
+
+                        <td>
+                            @(Model.UnSeenReports.Count - i)
+
+
+                        </td>
+
+                        <td>
+                            @item.Username
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Title)
+
+                        </td>
+                        <td>
+                            @item.SubmitDate.ToShortPersianDateString()
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Content)
+
+                        </td>
+
+                        <td>
+                            <a asp-page="ReportDetails" asp-route-ID="@item.ID" asp-route-UserID="@Model.AdminAccount.Id"
+                               asp-route-PageCode="1" class="button button1">جزییات</a>
+
+
+                        </td>
+                    </tr>
+                }
+            </table>
+
+
+            <button type="submit" class="button button1">خروجی اکسل</button>
+            <p dir="rtl" style="color:red;font-size:x-large">@Model.Message</p>
+        }
+        else
+        {
+            <h2 align="middle">گزارش دیده نشده ای وجود ندارد</h2>
+        }
+
+        <a asp-page="AdminHome" asp-page-handler="Back" asp-route-id="@Model.AdminAccount.Id"
+           class="button button3">بازگشت</a>
+
+    </form>
+</body>
+</html>

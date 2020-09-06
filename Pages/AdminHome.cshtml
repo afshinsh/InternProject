@@ -1,0 +1,197 @@
+﻿@page
+@model WebApplication4.Pages.AdminHomeModel
+@using DNTPersianUtils.Core;
+
+@{
+    Layout = "Table_Layout";
+}
+
+<!DOCTYPE html>
+<html dir="rtl">
+
+
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script type="text/javascript">
+
+        function DeleteFunc(id) {
+
+            event.preventDefault();
+            swal.fire({
+                title: "مطمین هستید؟",
+                text: "!در صورت حذف امکان بازگردانی آن وجود ندارد",
+                icon: "warning",
+                confirmButtonText: 'حذف کاربر',
+                cancelButtonText: 'انصراف',
+                showConfirmButton: true,
+                showCancelButton: true,
+                
+            })
+                .then((result) => {
+                    if (result.value) {    
+                        var bt = document.getElementById("delbtn_" + id);
+                        bt.click();
+                    }
+                });
+
+        }
+
+
+
+
+    </script>
+    <title>صفحه ی مدیر</title>
+</head>
+<body>
+    @if (Model.Accounts != null)
+    {
+        <h1 align="middle" style="color:darkblue"> خوش آمدید @Model.Account.UserName     </h1>
+
+        <h2 align="middle">لیست کاربران</h2>
+        <form method="post" asp-page="AdminHome" name="AdminHomeForm">
+            @if (Model.Accounts.Count() > 0)
+            {
+                <table id="t01">
+                    <tr>
+                        <th>
+                            <label>شناسه</label>
+                        </th>
+                        <th>
+                            <label>نام کاربری</label>
+                        </th>
+                        <th>
+                            <label>ایمیل</label>
+                        </th>
+                        <th>
+                            <label>وضعیت</label>
+                        </th>
+                        <th>
+                            تغییر وضعبت
+                        </th>
+                        <th>
+                            حذف و مسدودسازی
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Accounts)
+                    {
+                        if (item.IsAdmin)
+                            continue;
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(m => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.UserName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.Email)
+                            </td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <label>فعال</label>
+                                }
+                                else
+                                {
+                                    <label>غیر فعال</label>
+
+                                }
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <button asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-adminID="@Model.Account.Id"
+                                            class="button button3">
+                                        غیرفعال سازی
+                                    </button>
+
+                                }
+                                else
+                                {
+                                    <button asp-page-handler="Active" asp-route-id="@item.Id" asp-route-adminID="@Model.Account.Id"
+                                            class="button button1">
+                                        فعال سازی
+                                    </button>
+
+                                }
+
+                            </td>
+
+                            <td>
+                                <a asp-page="EditBan" asp-route-email="@item.Email"
+                                   asp-route-adminID="@Model.Account.Id" class="button button1">مسدود سازی</a>
+
+
+
+                                <button onclick="return DeleteFunc(@item.Id.ToString())" class="button button3">
+                                    حذف
+                                </button>
+                                <button style="display:none;" asp-page-handler="Delete" asp-route-id="@item.Id"
+                                        asp-route-adminID="@Model.Account.Id" id="delbtn_@item.Id.ToString()"
+                                        class="button button3">
+                                </button>
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+
+
+            }
+            else
+            {
+                <h2 align="middle">کاربری یافت نشد</h2>
+            }
+            <button style="margin-top : 40px" asp-page-handler="PublishedReports" asp-route-id="@Model.Account.Id" class="button button1">
+                مشاهده گزارشات ایجاد شده شما
+            </button>
+
+            <button asp-page-handler="Profile" asp-route-id="@Model.Account.Id" class="button button1">
+                مشاهده و ویرایش اطلاعات شخصی
+            </button>
+
+            <button asp-page-handler="ExcelUnSeen" asp-route-id="@Model.Account.Id" class="button button1">
+                لیست گزارشات دیده نشده
+            </button>
+
+            <button asp-page-handler="ExcelSeen" asp-route-id="@Model.Account.Id" class="button button1">
+                لیست گزارشات دیده شده
+            </button>
+            <button asp-page-handler="CreateReport" asp-route-id="@Model.Account.Id" class="button button1">ایجاد گزارش</button>
+
+            <p dir="rtl" style="color:red;font-size:x-large">@Model.Message</p>
+
+
+            <button asp-page-handler="UnAnsweredQuestion" asp-route-id="@Model.Account.Id"
+                    class="button button1" style="width:90%; margin-right:70px">
+                لیست سوالات در صف پاسخ
+            </button>
+
+            <div style="margin-top:20px">
+                <a align="middle" asp-page="index" asp-page-handler="logout" class="button button3">خروج</a>
+
+            </div>
+
+        </form>
+    }
+    else
+    {
+
+        <div class="imgcontainer">
+            <img src="~/noAccess.png" alt="noAccess" class="noAccess">
+        </div>
+        <h1 align="middle">! شما به این صفحه دسترسی ندارید  </h1>
+
+        <a asp-page="index" asp-page-handler="logout" class="button button3 horizontal-center">بازگشت</a>
+    }
+</body>
+
+</html>
+

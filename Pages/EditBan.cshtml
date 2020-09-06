@@ -1,0 +1,108 @@
+﻿@page
+@model WebApplication4.Pages.EditBanModel
+
+
+
+@{
+    Layout = "EditBan_Layout";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="fa-IR">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="js-persian-cal.css">
+    <script type="text/javascript" src="js-persian-cal.min.js"></script>
+    <title>Edit</title>
+
+    <style>
+    </style>
+    <title>مسدود سازی کاربر</title>
+</head>
+<body>
+    <form asp-page="Edit" asp-route-adminId="@Model.AdminAccount.Id" method="post">
+        @if (!Model.Account.IsBan)
+        {
+            <div style="text-align:center;">
+                <h3>
+                </h3>
+                <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=medium&timezone=Asia%2FTehran"
+                        width="300" height="215" frameborder="0" seamless>
+                </iframe>
+
+
+                <div class="row">
+
+                    <div class="column" style="background-color:khaki;">
+                        <h2>از کی مسدود باشد؟</h2>
+
+                        <label for="Date"><b>از تاریخ : </b></label>
+                        <input type="text" id="pcal2" class="pdate" asp-for="@Model.StartDateHelper.DateString" required><br>
+
+                        <label for="Date"><b>از ساعت : </b></label>
+                        <input dir="rtl" asp-for="@Model.StartDateHelper.Hour" type="number" max="23" min="0" required />
+
+                        <label for="Date"><b>از دقیقه : </b></label>
+                        <input asp-for="@Model.StartDateHelper.Minute" type="number" max="59" min="0" required />
+
+                        <label for="Date"><b>از ثانیه : </b></label>
+                        <input asp-for="@Model.StartDateHelper.Second" type="number" max="59" min="0" required />
+
+
+                    </div>
+
+                    <div class="column" style="background-color:wheat;">
+                        <h2>تا کی مسدود باشد؟</h2>
+
+                        <label for="Date"><b>تا تاریخ : </b></label>
+                        <input type="text" id="pcal1" class="pdate" asp-for="@Model.FinishDateHelper.DateString" required><br>
+
+                        <label for="Date"><b>تا ساعت : </b></label>
+                        <input dir="rtl" asp-for="@Model.FinishDateHelper.Hour" type="number" max="23" min="0" required />
+
+                        <label for="Date"><b>تا دقیقه : </b></label>
+                        <input asp-for="@Model.FinishDateHelper.Minute" type="number" max="59" min="0" required />
+
+                        <label for="Date"><b>تا ثانیه : </b></label>
+                        <input asp-for="@Model.FinishDateHelper.Second" type="number" max="59" min="0" required />
+
+
+                    </div>
+
+
+
+                </div>
+
+                <br />
+                <button type="submit" class="button button1">ثبت</button>
+            </div>
+
+        }
+        else
+        {
+            <h2>  @Model.Account.UserName  هم اکنون مسدود است </h2>
+
+            <label><b>میخواهید کاربر را از حالت مسدود خارج کنید؟</b></label>
+            <button asp-page-handler="UnBan" asp-route-adminId="@Model.AdminAccount.Id" class="button button1">ثبت</button>
+
+
+        }
+
+        <a asp-page="AdminHome" asp-page-handler="Back" asp-route-id="@Model.AdminAccount.Id"
+          style="margin-top:20px" class="button button3">بازگشت</a>
+
+        <p dir="rtl" style="color:red;font-size:x-large">@Model.Message</p>
+    </form>
+
+    <script type="text/javascript">
+        var objCal1 = new AMIB.persianCalendar('pcal1');
+        var objCal2 = new AMIB.persianCalendar('pcal2');
+
+    </script>
+</body>
+</html>

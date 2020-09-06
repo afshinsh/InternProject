@@ -1,0 +1,93 @@
+﻿@page
+@model WebApplication4.Pages.PublishedReportsModel
+@using DNTPersianUtils.Core;
+
+@using WebApplication4.Models
+@{
+    Layout = "Table_Layout";
+}
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>گزارشات</title>
+
+</head>
+<body>
+
+    <h1 align="middle" style="color:darkblue">لیست گزارشات ارایه شده</h1>
+
+    <table id="t01">
+        <tr>
+            <th>
+                <label>شماره</label>
+            </th>
+
+            <th>
+                <label>تیتر</label>
+            </th>
+
+
+            <th>
+                <label>تاریخ انتشار</label>
+            </th>
+
+
+            <th>
+                <label>محتوا</label>
+            </th>
+            <th>
+                <label>جزییات</label>
+            </th>
+        </tr>
+
+        @for (int i = 1; i <= Model.Reports.Count; i++)
+        {
+            Report item = Model.Reports[i - 1];
+
+
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(m => i)
+
+
+                </td>
+
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.SubmitDate.ToShortPersianDateString()
+
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => item.Content)
+
+                </td>
+                <td>
+                    <a asp-page="ReportDetails" asp-route-ID="@item.ID" asp-route-UserID="@Model.Account.Id"
+                       asp-route-PageCode="-1" class="button button1">جزییات</a>
+
+
+                </td>
+
+            </tr>
+        }
+    </table>
+
+    @if (Model.Account.IsAdmin)
+    {
+        <a asp-page="AdminHome" asp-page-handler="Back" asp-route-id="@Model.Account.Id" style="margin-top:19px"
+           class="button button3">بازگشت</a>
+    }
+    else
+    {
+        <a asp-page="Home" asp-page-handler="Back" asp-route-id="@Model.Account.Id" class="button button3"
+           style="margin-top:19px">بازگشت</a>
+    }
+</body>
+</html>

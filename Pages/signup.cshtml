@@ -1,0 +1,85 @@
+﻿@page
+@model WebApplication4.Pages.SignUpModel
+@{
+    Layout = "Signup_Layout";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+
+    <script>
+
+        function checkPassword() {
+            var password = document.forms["signupForm"]["pass"].value;
+            var re_password = document.forms["signupForm"]["rePass"].value;
+
+            if (password != re_password) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'پسورد هماهنگ نیست!',
+                    text: 'لطفا پسورد را مشابه وارد کنید'
+
+                });
+                return false;
+            }
+
+            return true;
+
+        }
+
+
+    </script>
+    <title>صفحه ی ثبت نام</title>
+
+
+    <script type="text/javascript" src="js-persian-cal.min.js"></script>
+</head>
+<body>
+
+    <form method="post" onsubmit="return checkPassword()" asp-page="signup" name="signupForm" style="border:1px solid #ccc">
+        <div class="container">
+            <h1>فرم ثبت نام</h1>
+            <p>لطفا اطلاعات خود را جهت ثبت نام وارد کنید</p>
+
+            <label for="username"><b>نام کاربری</b></label>
+            <input type="text"  asp-for="@Model.Account.UserName" placeholder="نام کاربری را وارد کنید" required>
+
+
+            <label for="email" ><b>ایمیل</b></label>
+            <input type="email" asp-for="@Model.Account.Email"  placeholder="ایمیل را وارد کنید" required>
+
+            <label for="bornDate"><b>تاریخ تولد</b></label>
+            <input type="text" id="pcal1" class="pdate" asp-for="@Model.DateHelper.DateString"><br>
+
+            <label for="psw"><b>گذرواژه</b></label>
+            <input id="pass" type="password" asp-for="@Model.Account.Password" placeholder="گذرواژه را وارد کنید" required>
+
+            <label for="psw-repeat"><b>تکرار گذرواژه</b></label>
+            <input id="rePass" type="password" placeholder="پسورد را تایید کنید" required>
+            <p dir="rtl" style="color:red; font-size:x-large">@Model.Message</p>
+
+
+
+
+
+
+            <div class="clearfix">
+                <a asp-page="Index" style="margin-top:8px" class="cancelbtn">لغو ثبت نام</a>
+                <button id="btn1" type="submit" class="signupbtn">ثبت نام</button>
+            </div>
+        </div>
+    </form>
+
+
+    <script type="text/javascript">
+        var objCal1 = new AMIB.persianCalendar('pcal1');
+    </script>
+</body>
+</html>
+

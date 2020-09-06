@@ -1,0 +1,54 @@
+﻿@page
+@model WebApplication4.Pages.EditProfileModel
+@using DNTPersianUtils.Core;
+
+
+@{
+    Layout = "Signup_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>ویرایش اطلاعات شخصی</title>
+</head>
+<body>
+
+    <form method="post" asp-page="EditProfile" asp-route-email="@Model.Account.Email"
+          style="border:1px solid #ccc">
+        <div class="container">
+            <h1>فرم ویرایش اطلاعات</h1>
+            <p>لطفا اطلاعات خود را جهت ویرایش وارد کنید</p>
+            <hr>
+
+            <label for="username"><b>نام کاربری</b></label>
+            <input type="text" asp-for="@Model.EditedAccount.UserName" value="@Model.Account.UserName"
+                   placeholder="نام کاربری را وارد کنید" required>
+
+            <label for="email"><b>ایمیل</b></label>
+            <input type="email" asp-for="@Model.EditedAccount.Email" value="@Model.Account.Email"
+                   placeholder="ایمیل را وارد کنید" required>
+
+            <label for="bornDate"><b>تاریخ تولد</b></label>
+            <input type="text" id="pcal1" class="pdate" value="@Model.Account.BornDate.ToShortPersianDateString()"
+                   asp-for="@Model.DateHelper.DateString"><br>
+
+            <label for="psw"><b>گذرواژه</b></label>
+            <input type="password" asp-for="@Model.EditedAccount.Password" placeholder="گذرواژه را وارد کنید">
+
+            <p dir="rtl" style="color:red; font-size:x-large">@Model.Message</p>
+
+            <div class="clearfix">
+                <button asp-page-handler="Cancel" asp-route-id="@Model.Account.Id" class="cancelbtn">
+                    لغو ویرایش
+                </button>
+                <button type="submit" class="signupbtn">ویرایش</button>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var objCal1 = new AMIB.persianCalendar('pcal1');
+    </script>
+</body>
+</html>

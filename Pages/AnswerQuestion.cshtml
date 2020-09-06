@@ -1,0 +1,84 @@
+﻿@page
+@model WebApplication4.Pages.AnswerQuestionModel
+@{
+    Layout = "Question_Layout";
+}
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>پاسخ سوال</title>
+</head>
+
+<body>
+    <div class="container">
+        <form method="post" asp-page="AnswerQuestion" asp-route-AdminId="@Model.Answer.OwnerId"
+              asp-route-QuestionId="@Model.Question.Id">
+
+
+            <div class="row">
+                <div class="col-75">
+                    <label>@Model.Question.Field - @Model.Question.Course</label>
+                </div>
+                <div class="col-25">
+                    <label>رشته و درس</label>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-75">
+                    <label>@Model.Question.Field - @Model.Question.Course</label>
+                </div>
+                <div class="col-25">
+                    <label>رشته و درس</label>
+                </div>
+
+            </div>
+
+            @if (Model.Question.AttachFilePath != null)
+            {
+                <div class="row">
+                    <div class="col-75">
+                        <button asp-page-handler="Download" asp-route-QuestionId="@Model.Question.Id">دانلود فایل ضمیمه</button>
+                    </div>
+                    <div class="col-25">
+                        <label>فابل ضمیمه</label>
+                    </div>
+
+                </div>
+            }
+
+
+
+
+
+            <div class="row">
+
+                <div class="col-75">
+                    <textarea asp-for="@Model.Answer.Text" placeholder="متن پاسخ" style="height:200px" ></textarea>
+                </div>
+                <div class="col-25">
+                    <label>پاسخ سوال را وارد کنید</label>
+                </div>
+            </div>
+
+
+            <p dir="rtl" style="color:red;font-size:x-large">@Model.Message</p>
+            <div class="row">
+
+                <input type="submit" value="ثبت پاسخ">
+            </div>
+            <div class="row">
+
+                <a style="width: 20%; background-color: #4CAF50" asp-page="AdminHome" asp-page-handler="Back"
+                   asp-route-id="@Model.Question.ResponserId">بازگشت</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

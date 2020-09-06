@@ -1,0 +1,81 @@
+﻿@page
+@model WebApplication4.Pages.UnAnsweredQuestionModel
+@using DNTPersianUtils.Core;
+
+@{
+    Layout = "Table_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UnAnsweredQuestion</title>
+</head>
+<body>
+
+    <h2 align="middle">لیست سوالات پاسخ داده نشده در صف پاسخ</h2>
+    <table id="t01">
+        <tr>
+            <th>
+                <label>شناسه</label>
+            </th>
+            <th>
+                <label>عنوان </label>
+            </th>
+            <th>
+                <label>تاریخ </label>
+            </th>
+            <th>
+                <label>مبحث</label>
+            </th>
+            <th>
+                <label>نوع</label>
+            </th>
+            <th>
+                <label>متن سوال</label>
+            </th>
+            <th>
+                <label>پاسخ به سوال</label>
+            </th>
+        </tr>
+
+        @foreach (var item in Model.InQueueQuestions)
+        {
+            <tr>
+                <td>
+                    <label>@item.Id</label>
+                </td>
+                <td>
+                    <label>@item.Title</label>
+                </td>
+                <td>
+                    <label>@item.Date.ToPersianDateTextify() </label>
+                </td>
+                <td>
+                    <label>@item.Course</label>
+                </td>
+                <td>
+                    <label>@item.Type</label>
+                </td>
+                <td>
+                    <label>@item.Text</label>
+                </td>
+
+                <td>
+                    <a asp-page="AnswerQuestion" asp-route-QuestionId="@item.Id"
+                       asp-route-AdminId="@Model.Account.Id" class="button button1">
+                        پاسخ
+                    </a>
+                </td>
+
+            </tr>
+
+        }
+
+    </table>
+    <a align="middle" asp-page="AdminHome" asp-page-handler="Back" asp-route-id="@Model.Account.Id"
+       class="button button3 horizontal-center">بازگشت به خانه</a>
+</body>
+</html>

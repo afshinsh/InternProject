@@ -1,0 +1,75 @@
+﻿@page
+@model WebApplication4.Pages.CreateReportModel
+@{
+    Layout = "Report_Layout";;
+}
+
+
+
+<!DOCTYPE html >
+
+<html >
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="fa-IR">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="js-persian-cal.css">
+    <script type="text/javascript" src="js-persian-cal.min.js"></script>
+        
+    <title>ایجاد گزارش روزانه</title>
+</head>
+<body>
+    <h1>گزارش روزانه خود را تشکیل دهید : </h1>
+    
+    <form method="post" asp-page="CreateReport" asp-route-id="@Model.Report.UserID">
+
+
+        <label for="Date"><b> تاریخ :  </b></label>
+        <input type="text" id="pcal1" class="pdate" asp-for="@Model.DateSubmit" required><br>
+
+        <div style="margin-top:25px">
+
+            <label for="Title"><b>عنوان  :  </b></label>
+            <input asp-for="@Model.Report.Title" type="text" required/>
+        </div>
+
+            <div style="margin-top:25px">
+
+                <label for="Title"><b>ساعت شروع  :  </b></label>
+                <input asp-for="@Model.Report.BeginTime" type="time" value="00:00 PM" required />
+
+                <label style="padding-right:25px" for="Title"><b>ساعت پایان  :  </b></label>
+
+                <input asp-for="@Model.Report.EndTime" type="time" value="00:00 PM" required />
+                <label style="padding-right:25px"><b> فرمت : H:M PM/AM </b></label>
+            </div>
+
+            <div style="margin-top:25px">
+                <label for="Content"><b> محتوا :  </b></label>
+                <textarea type="text" asp-for="@Model.Report.Content" rows="4" cols="70" required>
+                    </textarea>
+            </div>
+
+            <p dir="rtl" style="color:red; font-size:x-large">@Model.Message</p>
+
+
+
+            <button type="submit" class="button button1" style="margin-top:20px">
+                ثبت
+            </button>
+
+            <a asp-page-handler="Back" asp-route-id="@Model.Report.UserID"
+               class="button button3">برگشت به خانه</a>
+
+
+    </form>
+    <script type="text/javascript">
+        var objCal1 = new AMIB.persianCalendar('pcal1');
+    </script>
+
+</body>
+
+
+</html >

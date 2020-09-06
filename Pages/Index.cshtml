@@ -1,0 +1,57 @@
+﻿@page 
+@model WebApplication4.Pages.IndexModel
+
+
+@{
+    Layout = "Login_Layout";
+}
+
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>صفحه ی ورود</title>
+</head>
+<body>
+
+    <h2 align="middle">صفحه ی ورود</h2>
+
+    <form method="post" asp-page="index">
+        <asp:TextBox ID="tb1" runat="server" Text="helooooo"></asp:TextBox>
+        <div class="imgcontainer">
+            <img src="~/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+            <label for="uname"><b>نام کاربری</b></label>
+            <input id="username" type="text" asp-for="@Model.Account.UserName"
+                   value="@Request.Cookies["username"]" placeholder="نام کاربری را وارد کنید" required>
+
+            <label for="psw"><b>گذرواژه</b></label>
+            <input type="password" asp-for="@Model.Account.Password"
+                   value="@Request.Cookies["password"]" placeholder="گذرواژه را وارد کنید" required>
+
+            <p dir="rtl" style="color:red;font-size:x-large">@Model.Message</p>
+
+            <button type="submit">ورود</button>
+            <label>
+                <input type="checkbox" asp-for="@Model.RememberMe"> مرا به خاطر بسپار
+            </label>
+        
+            <div style="margin-top:20px">
+
+                <a asp-page="signup">ثبت نام کابران</a>
+                <a asp-page="AdminSignup" style="background-color:olivedrab; margin-right:10px">ثبت نام مدیران</a>
+
+            </div>
+
+            
+        </div>
+
+
+    </form>
+
+</body>
+</html>

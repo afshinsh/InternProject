@@ -1,0 +1,104 @@
+﻿@page
+@model WebApplication4.Pages.HomeModel
+@using DNTPersianUtils.Core;
+@using Models;
+
+
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/home.css">
+
+    <title>خانه</title>
+</head>
+<body>
+    <form asp-page="Home" method="post">
+
+        <h1 align="middle"> @Model.Account.UserName خوش آمدید  </h1>
+
+
+
+
+        @if (!Model.Account.IsBan)
+        {
+
+            <button asp-page-handler="Create" asp-route-id="@Model.Account.Id">ایجاد گزارش روزانه</button>
+        }
+        else
+        {
+            <h2 style="color:red" align="middle">!دسترسی شما توسط ادمین مسدود شده است</h2>
+            <h3 align="middle">----- شما تا تاریخ زیر مسدود هستید -----</h3>
+            <h3 align="middle">@Model.Account.ShowPeriod()</h3>
+        }
+
+
+        <button asp-page-handler="Reports" asp-route-id="@Model.Account.Id" style="margin-top:30px">مشاهده گزارشات ایجاد شده</button>
+
+        <button asp-page-handler="Profile" asp-route-id="@Model.Account.Id">مشاهده و ویرایش اطلاعات شخصی</button>
+
+        <h2 align="middle" style="margin-top:45px">سوالات متداول</h2>
+        <table id="t01">
+            <tr>
+                <th>
+                    <label>سوال</label>
+                </th>
+                <th>
+                    <label>پاسخ سوال </label>
+                </th>
+                <th>
+                    <label>وضعیت سوال </label>
+                </th>
+                <th>
+                    <label>جزییات سوال</label>
+                </th>
+            </tr>
+            @foreach (var question in Model.AnsweredQuestions)
+            {
+                
+        <tr>
+             <td>
+                <label>@question.Text</label>
+             </td>
+
+             <td>
+                @if (question.Status == "Answered")
+                {
+                    <label>@Model.Answers[question.AnswerId - 1].Text</label>
+
+                }
+                else
+                {
+                    <label>پاسخی داده نشده</label>
+                }
+             </td>
+             <td>
+                    @if(question.Status == "Seen")
+                    {
+                        <label style="color:red">دیده شده</label>
+                    }
+                    else
+                    {
+                        <label>پاسخ داده شده</label>
+                    }
+             </td>
+             <td>
+                <a asp-page="QuestionDetails" asp-route-QuestionId="@question.Id"
+                   class="button button 1">جزییات </a>
+             </td>
+        </tr>
+
+            }
+        </table>
+
+        <button align="middle" asp-page-handler="CreateQuestion" asp-route-UserId="@Model.Account.Id.ToString()"
+               style="margin-top:45px" >سوال مورد نطر را پیدا نکردید؟  </button>
+
+
+        <button asp-page-handler="Logout" class="button3">خروج</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,93 @@
+﻿@page
+@model WebApplication4.Pages.QuestionDetailsModel
+@using DNTPersianUtils.Core
+@{
+    Layout = "Table_Layout";
+}
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>جزییات سوال</title>
+</head>
+<body>
+    <h2 align="middle">جزییات سوال</h2>
+    <table id="t01">
+        <tr>
+            <th>
+                شناسه
+            </th>
+            <th>
+                عنوان
+            </th>
+            <th>
+                تاریخ
+            </th>
+            <th>
+                مبحث
+            </th>
+            <th>
+                نوع
+            </th>
+            <th>
+            متن سوال
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Question.Id
+            </td>
+            <td>
+                @Model.Question.Title
+            </td>
+            <td>
+                @Model.Question.Date.ToShortPersianDateTimeString()
+            </td>
+            <td>
+                @Model.Question.Course
+            </td>
+            <td>
+                @Model.Question.Type
+            </td>
+            <td>
+                @Model.Question.Text
+            </td>
+        </tr>
+
+    </table>
+
+    <h2 align="middle" style="margin-top:20px">جزییات پاسخ</h2>
+
+    <table id="t01">
+        <tr>
+            <th>
+                شناسه
+            </th>
+       
+            <th>
+                تاریخ
+            </th>
+            
+            <th>
+                متن پاسخ
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Answer.Id
+            </td>
+            <td>
+                @Model.Answer.Date.ToShortPersianDateTimeString()
+            </td>
+            <td>
+                @Model.Answer.Text
+            </td>
+        </tr>
+    </table>
+
+    <a  asp-page="Home" asp-page-handler="Back" style="margin-top:20px; align-self:center" 
+       asp-route-id="@Model.Question.OwnerId" class="button button3" >بازگشت</a>
+</body>
+</html>
